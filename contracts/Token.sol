@@ -2,8 +2,9 @@
 pragma solidity ^0.8.12;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/draft-ERC721Votes.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Token is ERC721Votes {
+contract Token is ERC721Votes, Ownable {
     constructor(
         string memory _name,
         string memory _symbol
@@ -15,13 +16,13 @@ contract Token is ERC721Votes {
         return _getTotalSupply();
     }
 
-    function mint(address userAccount, uint256 tokenId) public {
+    function mint(address userAccount, uint256 tokenId) public onlyOwner {
         _mint(userAccount, tokenId);
     }
 
-    function burn(uint256 tokenId) public {
+    function burn(uint256 tokenId) public onlyOwner {
         _burn(tokenId);
     }
 
-    
+
 }
