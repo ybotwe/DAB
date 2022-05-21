@@ -12,12 +12,12 @@ module.exports = async function (deployer) {
     await deployer.deploy(Token, name, symbol);
     const token = await Token.deployed();
 
-    await token.mint(executor, 0, {from: deployer});
-    await token.mint(voter1, 1, {from: deployer});
-    await token.mint(voter2, 2, {from: deployer});
-    await token.mint(voter3, 3, {from: deployer});
-    await token.mint(voter4, 4, {from: deployer});
-    await token.mint(voter5, 5, {from: deployer});
+    await token.mint(executor, 0, {from: executor});
+    await token.mint(voter1, 1, {from: executor});
+    await token.mint(voter2, 2, {from: executor});
+    await token.mint(voter3, 3, {from: executor});
+    await token.mint(voter4, 4, {from: executor});
+    await token.mint(voter5, 5, {from: executor});
 
 
     // Deploy timelock
@@ -25,15 +25,15 @@ module.exports = async function (deployer) {
 
 
     await deployer.deploy(Timelock, minDelay, [executor], [executor]);
-    const timelock = Timelock.deployed();
-
+    const timelock = await Timelock.deployed();
+    console.log(timelock);
 
     // Deploy Governance
-    const quorum = 1;
+    const quorum = 5;
     const votingDelay = 0;
     const votingPeriod = 10;
 
-    await deployer.deploy(Governance, token.address, quorum, votingDelay, votingPeriod);
+    await deployer.deploy(Governance, "Polygon DAO", token.address, timelock.address, quorum, votingDelay, votingPeriod);
     const governance = await Governance.deployed();
 
     // Deploy Treasury
