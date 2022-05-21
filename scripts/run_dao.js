@@ -61,7 +61,7 @@ module.exports = async function (callback) {
     console.log(`Current state of proposal: ${proposalState.toString()} \n`)
 
     //This is to speed up to one block after the voting period ends
-    await token.transfer(voter1, amount, { from: executor })
+    await token.mint(voter1, 6, { from: executor })
 
     const { againstVotes, forVotes, abstainVotes } = await governance.proposalVotes.call(id)
     console.log(`Votes For: ${web3.utils.fromWei(forVotes.toString(), 'ether')}`)

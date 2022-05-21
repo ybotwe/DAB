@@ -29,9 +29,9 @@ module.exports = async function (deployer) {
     console.log(timelock);
 
     // Deploy Governance
-    const quorum = 5;
+    const quorum = 1;
     const votingDelay = 0;
-    const votingPeriod = 10;
+    const votingPeriod = 5;
 
     await deployer.deploy(Governance, "Polygon DAO", token.address, timelock.address, quorum, votingDelay, votingPeriod);
     const governance = await Governance.deployed();
